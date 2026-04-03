@@ -5,7 +5,7 @@ import 'glossary_repository.dart'
     show GlossaryLoadException, GlossaryRepository;
 import 'models/glossary_entry.dart';
 
-const _ansLogoAsset = 'assets/images/ANS-logo.png';
+const _ansLogoBannerAsset = 'assets/images/ANS-logo-banner.png';
 
 class GlossaryPage extends StatefulWidget {
   const GlossaryPage({super.key, required this.repository});
@@ -40,7 +40,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
         surfaceTintColor: Colors.transparent,
         toolbarHeight: 72,
         title: Image.asset(
-          _ansLogoAsset,
+          _ansLogoBannerAsset,
           height: 56,
           fit: BoxFit.contain,
           alignment: Alignment.centerLeft,

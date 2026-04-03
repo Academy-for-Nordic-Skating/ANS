@@ -22,7 +22,8 @@
     }
   ],
   "hosting": {
-    "public": "../flutter_app/build/web",
+    "public": "hosting",
+    "predeploy": ["bash scripts/sync-web-build.sh"],
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {

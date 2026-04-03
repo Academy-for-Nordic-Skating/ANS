@@ -37,6 +37,9 @@ firebase/functions/node_modules/
 firebase/functions/lib/
 firebase/functions/.runtimeconfig.json
 
+# Firebase (synced Flutter web build for Hosting deploy / emulator)
+firebase/hosting/
+
 # Firebase
 .firebase/
 firebase-debug.log
