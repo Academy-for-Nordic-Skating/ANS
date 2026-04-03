@@ -1,0 +1,66 @@
+openapi: 3.0.3
+info:
+  title: ANS Glossary API
+  description: Public read-only glossary payload served by Firebase Cloud Functions (HTTP).
+  version: 1.0.0
+servers:
+  - url: https://{region}-{project}.cloudfunctions.net
+    variables:
+      region:
+        default: europe-west1
+      project:
+        default: your-project-id
+paths:
+  /glossary:
+    get:
+      operationId: getGlossary
+      summary: List all published glossary entries with resolved image URLs
+      responses:
+        "200":
+          description: Glossary snapshot
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GlossaryResponse"
+        "500":
+          description: Server error
+components:
+  schemas:
+    GlossaryResponse:
+      type: object
+      required:
+        - version
+        - entries
+      properties:
+        version:
+          type: integer
+          example: 1
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        entries:
+          type: array
+          items:
+            $ref: "#/components/schemas/GlossaryEntry"
+    GlossaryEntry:
+      type: object
+      required:
+        - id
+        - swedish
+        - english
+        - description
+      properties:
+        id:
+          type: string
+        swedish:
+          type: string
+        english:
+          type: string
+        description:
+          type: string
+        imageUrl:
+          type: string
+          format: uri
+          nullable: true
+          description: Resolved HTTPS URL for the image, or null if missing
