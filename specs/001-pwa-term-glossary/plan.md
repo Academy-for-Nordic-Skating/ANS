@@ -6,7 +6,7 @@
 
 ## Summary
 
-Deliver a cross-platform **Flutter** client (web-first for PWA install/add-to-home-screen) that lists Nordic skating glossary entries (Swedish, English, description, one image) and copies the Swedish term via the clipboard. **Firebase** holds curated content: **Cloud Firestore** for text fields and image references, **Cloud Storage** for image files, **Cloud Functions** for a read-only HTTP API that returns a versioned glossary payload the app consumes (keeps the client thin, centralizes shaping/signed URLs, and leaves room for caching and future non-client admin flows). **Firebase Hosting** serves the built Flutter web app.
+Deliver a cross-platform **Flutter** client (web-first for PWA install/add-to-home-screen) that lists Nordic skating glossary entries (Swedish, English, one image) and copies the Swedish term via the clipboard. **Firebase** holds curated content: **Cloud Firestore** for text fields and image references, **Cloud Storage** for image files, **Cloud Functions** for a read-only HTTP API that returns a versioned glossary payload the app consumes (keeps the client thin, centralizes shaping/signed URLs, and leaves room for caching and future non-client admin flows). **Firebase Hosting** serves the built Flutter web app.
 
 ## Technical Context
 

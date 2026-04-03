@@ -9,14 +9,13 @@ Maps to one term row shown in the UI and one document in Firestore (or one eleme
 | `id` | string | yes | Stable ID (document ID or slug) for keys and analytics |
 | `swedish` | string | yes | Source term; **only** this value is copied to clipboard |
 | `english` | string | yes | Translation |
-| `description` | string | yes | Explanatory text; may be long — UI must scroll/expand per spec |
 | `sortOrder` | int | optional | Stable ordering in the list (default: lexicographic by `swedish` if omitted) |
 | `imageStoragePath` | string | optional | Path in Cloud Storage bucket (e.g. `glossary/{id}.webp`); API resolves to URL |
 | `createdAt` / `updatedAt` | timestamp | optional | Audit for content management (future) |
 
 ### Validation (content rules)
 
-- `swedish`, `english`, `description`: non-empty strings after trim for published entries.
+- `swedish`, `english`: non-empty strings after trim for published entries.
 - `imageStoragePath`: if present, must reference an object that exists in Storage before publishing (enforced operationally or via admin tooling — not app v1).
 
 ### Relationships
@@ -31,7 +30,6 @@ Suggested collection: `glossary_entries/{entryId}`
 glossary_entries/{entryId}
   swedish: string
   english: string
-  description: string
   sortOrder: number
   imageStoragePath: string | null
   updatedAt: timestamp
@@ -52,7 +50,6 @@ The client consumes **JSON** shaped like:
       "id": "string",
       "swedish": "string",
       "english": "string",
-      "description": "string",
       "imageUrl": "https://..."
     }
   ]

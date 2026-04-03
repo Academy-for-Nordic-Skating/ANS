@@ -49,15 +49,12 @@ components:
         - id
         - swedish
         - english
-        - description
       properties:
         id:
           type: string
         swedish:
           type: string
         english:
-          type: string
-        description:
           type: string
         imageUrl:
           type: string

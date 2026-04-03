@@ -1,0 +1,11 @@
+rules_version = '2';
+
+// Public read for published glossary images; no client uploads in v1.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /glossary/{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}

@@ -13,7 +13,7 @@
 
 ## 2. Firebase data split: Firestore + Storage
 
-**Decision**: Store **text fields** (`swedish`, `english`, `description`, ordering metadata) in **Firestore**. Store **image bytes** in **Cloud Storage**; Firestore holds `imagePath` or stable reference; the API returns ready-to-use **HTTPS URLs** (public read with locked-down write, or short-lived signed URLs from Functions).
+**Decision**: Store **text fields** (`swedish`, `english`, ordering metadata) in **Firestore**. Store **image bytes** in **Cloud Storage**; Firestore holds `imagePath` or stable reference; the API returns ready-to-use **HTTPS URLs** (public read with locked-down write, or short-lived signed URLs from Functions).
 
 **Rationale**: Keeps documents small and fast to query; images scale independently; matches “one picture per term.”
 
@@ -35,9 +35,9 @@
 
 ## 4. Clipboard (Swedish term only)
 
-**Decision**: Use Flutter **`Clipboard.setData`** with **only** the `swedish` string on the copy action; separate UI control from English/description.
+**Decision**: Use Flutter **`Clipboard.setData`** with **only** the `swedish` string on the copy action; separate UI control from English.
 
-**Rationale**: Matches FR-005; works on web and mobile from same API.
+**Rationale**: Matches FR-005 (Swedish only); works on web and mobile from same API.
 
 ## 5. Testing strategy
 
