@@ -9,11 +9,13 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'replace-me',
-    appId: '1:000000000000:web:0000000000000000000000',
-    messagingSenderId: '000000000000',
-    projectId: 'ans-glossary-local',
-    authDomain: 'ans-glossary-local.firebaseapp.com',
-    storageBucket: 'ans-glossary-local.appspot.com',
+    apiKey: 'AIzaSyCQNqX9B7m_WL0RtChZat6ZC57yJC1p6Y8',
+    appId: '1:1015388215621:web:c74bc9e870dfd897f9862c',
+    messagingSenderId: '1015388215621',
+    projectId: 'academy-for-nordic-skating',
+    authDomain: 'academy-for-nordic-skating.firebaseapp.com',
+    storageBucket: 'academy-for-nordic-skating.firebasestorage.app',
+    measurementId: 'G-KR36KTPGPV',
   );
+
 }

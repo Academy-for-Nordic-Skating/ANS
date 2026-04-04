@@ -1,11 +1,20 @@
 rules_version = '2';
 
-// Public read for published glossary images; no client uploads in v1.
+// Public read for published glossary images; uploads restricted to admins (see users/{uid} in Firestore).
 service firebase.storage {
   match /b/{bucket}/o {
+    function isAdmin() {
+      return request.auth != null &&
+        firestore.exists(/databases/(default)/documents/users/$(request.auth.uid)) &&
+        (
+          firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin == true
+        );
+    }
+
     match /glossary/{allPaths=**} {
       allow read: if true;
-      allow write: if false;
+      allow write: if isAdmin();
     }
   }
 }

@@ -1,7 +1,19 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
+import 'features/admin/admin_shell.dart';
 import 'features/glossary/glossary_page.dart';
 import 'features/glossary/glossary_repository.dart';
+
+String _initialRoute() {
+  if (kIsWeb) {
+    final path = Uri.base.path;
+    if (path.startsWith('/admin')) {
+      return '/admin';
+    }
+  }
+  return '/';
+}
 
 class AnsApp extends StatelessWidget {
   const AnsApp({super.key, required this.repository});
@@ -17,7 +29,16 @@ class AnsApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
       ),
-      home: GlossaryPage(repository: repository),
+      initialRoute: _initialRoute(),
+      routes: {
+        '/': (context) => GlossaryPage(
+              repository: repository,
+              onAdminPressed: () {
+                Navigator.of(context).pushNamed('/admin');
+              },
+            ),
+        '/admin': (context) => const AdminShell(),
+      },
     );
   }
 }

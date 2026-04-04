@@ -19,19 +19,6 @@ flutter_app/coverage/
 flutter_app/*.iml
 flutter_app/.metadata
 
-# Android
-flutter_app/android/.gradle/
-flutter_app/android/local.properties
-flutter_app/android/**/GeneratedPluginRegistrant.java
-flutter_app/android/**/key.properties
-
-# iOS
-flutter_app/ios/Pods/
-flutter_app/ios/.symlinks/
-flutter_app/ios/Flutter/Flutter.framework
-flutter_app/ios/Flutter/Flutter.podspec
-flutter_app/ios/ServiceDefinitions.json
-
 # Node / Firebase Functions
 firebase/functions/node_modules/
 firebase/functions/lib/

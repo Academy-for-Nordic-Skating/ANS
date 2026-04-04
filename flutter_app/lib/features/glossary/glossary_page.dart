@@ -8,9 +8,16 @@ import 'models/glossary_entry.dart';
 const _ansLogoBannerAsset = 'assets/images/ANS-logo-banner.png';
 
 class GlossaryPage extends StatefulWidget {
-  const GlossaryPage({super.key, required this.repository});
+  const GlossaryPage({
+    super.key,
+    required this.repository,
+    this.onAdminPressed,
+  });
 
   final GlossaryRepository repository;
+
+  /// Opens the glossary editor when set (e.g. from app routes).
+  final VoidCallback? onAdminPressed;
 
   @override
   State<GlossaryPage> createState() => _GlossaryPageState();
@@ -48,6 +55,12 @@ class _GlossaryPageState extends State<GlossaryPage> {
         ),
         centerTitle: false,
         actions: [
+          if (widget.onAdminPressed != null)
+            IconButton(
+              tooltip: 'Glossary editor',
+              onPressed: widget.onAdminPressed,
+              icon: const Icon(Icons.edit_note_outlined),
+            ),
           IconButton(
             tooltip: 'Refresh',
             onPressed: _reload,

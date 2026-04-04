@@ -26,12 +26,12 @@ The template file `flutter_app/lib/firebase_options.dart` uses placeholder value
 ```bash
 dart pub global activate flutterfire_cli
 cd /Users/ward/workspace/ANS/flutter_app
-dart pub global run flutterfire_cli:flutterfire configure --platforms=web,ios,android
+dart pub global run flutterfire_cli:flutterfire configure --platforms=web
 ```
 
 Link the Firebase project to `.firebaserc` (or align `ans-glossary-local` with your project ID).
 
-## 3. Local emulators (Functions + Firestore + Storage + Hosting UI)
+## 3. Local emulators (Auth + Functions + Firestore + Storage + Hosting UI)
 
 From the **`firebase/`** directory (where `firebase.json` lives):
 
@@ -80,6 +80,29 @@ This writes five sample documents to `glossary_entries` (Swedish, English, `sort
 If `imageStoragePath` is set, upload the file to the **Storage emulator** under `glossary/...` so Admin can sign a URL.
 
 Then open the app and pull to refresh or use the app bar **Refresh** action.
+
+## 4b. Admin CMS (Auth emulator + `users/{uid}`)
+
+The admin UI lives at **`/admin`** (path URL strategy). Only users with a Firestore profile **`users/{uid}`** where **`role` is `"admin"`** or **`isAdmin` is `true`** can edit glossary entries.
+
+1. **Emulators:** `firebase emulators:start` includes the **Auth emulator** (port **9099** in `firebase/firebase.json`). The Flutter app connects to Auth/Firestore/Storage emulators when built with **`USE_FIREBASE_EMULATOR=true`** (see below).
+
+2. **Create an emulator user:** In the Emulator UI (**Authentication** tab), add a user (email/password), or use the Auth REST API / `firebase auth:import` as you prefer. Copy the user’s **UID**.
+
+3. **Grant admin in Firestore:** In the **Firestore** emulator (port **8080**), create document **`users/{thatUid}`** with field **`role`** = string **`admin`** (or **`isAdmin`**: boolean **`true`**).
+
+4. **Run the app with emulators:**
+
+```bash
+cd /Users/ward/workspace/ANS/flutter_app
+flutter run -d chrome \
+  --dart-define=USE_FIREBASE_EMULATOR=true \
+  --dart-define=GLOSSARY_URL=http://127.0.0.1:5001/ans-glossary-local/europe-west1/getGlossary
+```
+
+Adjust `GLOSSARY_URL` if your Firebase project ID or region differs.
+
+**Production:** Enable **Email/Password** in Firebase Authentication, create the admin user, then add **`users/{uid}`** with **`role`: `admin`** in the Firestore console (not from the client app). Deploy updated **Firestore** and **Storage** rules with the app.
 
 ## 5. Build web + deploy
 
