@@ -100,7 +100,8 @@ export const getGlossary = onRequest(
         entries,
       };
 
-      res.set("Cache-Control", "public, max-age=60");
+      // Avoid stale lists after CMS edits (Flutter web uses the browser HTTP cache).
+      res.set("Cache-Control", "no-store");
       res.status(200).json(body);
     } catch (e) {
       logger.error("getGlossary failed", e);
