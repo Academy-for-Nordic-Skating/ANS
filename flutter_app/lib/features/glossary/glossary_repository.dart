@@ -17,7 +17,7 @@ class GlossaryRepository {
     const url = String.fromEnvironment(
       'GLOSSARY_URL',
       defaultValue:
-          'http://127.0.0.1:5001/ans-glossary-local/europe-west1/getGlossary',
+          'https://europe-west1-academy-for-nordic-skating.cloudfunctions.net/getGlossary',
     );
     return url;
   }

@@ -1,5 +1,16 @@
-// Generated for local development. Run `dart pub global run flutterfire_cli:flutterfire configure`
-// to replace with your Firebase project credentials.
+// Live project: academy-for-nordic-skating (project number 1015388215621).
+//
+// You still need your Web app credentials from Firebase (FlutterFire can fill
+// these automatically — see specs/001-pwa-term-glossary/quickstart.md):
+//
+// 1. Open https://console.firebase.google.com → project "academy-for-nordic-skating"
+// 2. Gear icon → Project settings → "Your apps" → select the Web app (</>)
+//    or "Add app" → Web if you have none.
+// 3. Under "SDK setup and configuration", copy `apiKey` and `appId` from the
+//    `firebaseConfig` object and paste them below (replace the placeholders).
+//
+// If Storage fails later, check Project settings → General for the default
+// Storage bucket name and update [storageBucket] if it is not *.appspot.com.
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 
 /// Default [FirebaseOptions] for use with Firebase initialization.
