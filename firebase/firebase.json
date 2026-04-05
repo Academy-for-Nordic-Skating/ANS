@@ -23,7 +23,7 @@
   ],
   "hosting": {
     "public": "hosting",
-    "predeploy": ["bash scripts/sync-web-build.sh"],
+    "predeploy": ["node scripts/sync-web-build.cjs"],
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
