@@ -43,3 +43,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Web-only PWA: native project folders not tracked (recreate with
+# flutter create . --platforms=android,ios if you need mobile builds)
+/android/
+/ios/
