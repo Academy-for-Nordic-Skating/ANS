@@ -53,18 +53,24 @@ class GlossaryEntryTile extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    entry.english,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: theme.colorScheme.primary,
+                      fontSize:
+                          (theme.textTheme.titleMedium?.fontSize ?? 16) + 1,
+                    ),
+                  ),
+                ),
                 IconButton(
                   tooltip: 'Copy Swedish term',
                   icon: const Icon(Icons.copy),
                   onPressed: () => _copySwedish(context),
+                  visualDensity: VisualDensity.compact,
                 ),
               ],
-            ),
-            Text(
-              entry.english,
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.primary,
-              ),
             ),
             const SizedBox(height: 8),
             if (entry.imageUrl != null && entry.imageUrl!.isNotEmpty)
