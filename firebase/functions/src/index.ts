@@ -71,19 +71,13 @@ export const getGlossary = onRequest(
           maxUpdated = d.updatedAt;
         }
 
+        // Public download URL (storage.rules allow read for glossary/**). Avoids
+        // getSignedUrl IAM failures that left imageUrl null and broke the client UI.
         let imageUrl: string | null = null;
         const path = d.imageStoragePath?.trim();
         if (path) {
-          try {
-            const [url] = await bucket.file(path).getSignedUrl({
-              action: "read",
-              expires: Date.now() + 365 * 24 * 60 * 60 * 1000,
-            });
-            imageUrl = url;
-          } catch (e) {
-            logger.warn("Failed to resolve image URL", { path, err: e });
-            imageUrl = null;
-          }
+          const enc = encodeURIComponent(path);
+          imageUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${enc}?alt=media`;
         }
 
         entries.push({

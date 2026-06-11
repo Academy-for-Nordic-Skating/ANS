@@ -7,6 +7,9 @@ import 'models/glossary_entry.dart';
 
 const _ansLogoBannerAsset = 'assets/images/ANS-logo-banner.png';
 
+/// Intrinsic size of [ANS-logo-banner.png] (avoids 0-width layout for `Image` in AppBar on web).
+const _ansLogoBannerAspectRatio = 1200 / 303;
+
 class GlossaryPage extends StatefulWidget {
   const GlossaryPage({
     super.key,
@@ -46,12 +49,22 @@ class _GlossaryPageState extends State<GlossaryPage> {
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.transparent,
         toolbarHeight: 72,
-        title: Image.asset(
-          _ansLogoBannerAsset,
+        title: SizedBox(
           height: 56,
-          fit: BoxFit.contain,
-          alignment: Alignment.centerLeft,
-          semanticLabel: 'Academy for Nordic Skating',
+          child: AspectRatio(
+            aspectRatio: _ansLogoBannerAspectRatio,
+            child: Image.asset(
+              _ansLogoBannerAsset,
+              fit: BoxFit.contain,
+              alignment: Alignment.centerLeft,
+              semanticLabel: 'Academy for Nordic Skating',
+              errorBuilder: (context, error, stackTrace) => Icon(
+                Icons.image_not_supported_outlined,
+                size: 40,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
         ),
         centerTitle: false,
         actions: [

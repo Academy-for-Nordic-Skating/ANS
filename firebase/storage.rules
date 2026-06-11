@@ -3,12 +3,19 @@ rules_version = '2';
 // Public read for published glossary images; uploads restricted to admins (see users/{uid} in Firestore).
 service firebase.storage {
   match /b/{bucket}/o {
+    // Single Firestore read (duplicate firestore.get() in one rule can mis-evaluate in some clients).
+    function adminUserDoc() {
+      return firestore.get(
+        /databases/(default)/documents/users/$(request.auth.uid)
+      );
+    }
+
     function isAdmin() {
       return request.auth != null &&
         firestore.exists(/databases/(default)/documents/users/$(request.auth.uid)) &&
         (
-          firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
-          firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin == true
+          adminUserDoc().data.role == 'admin' ||
+          adminUserDoc().data.isAdmin == true
         );
     }
 

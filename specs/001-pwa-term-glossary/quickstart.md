@@ -2,6 +2,8 @@
 
 Verified against the repository layout: configuration lives under `firebase/`; the Flutter app is `flutter_app/`.
 
+**Shell paths:** Run the `cd` commands below from the **repository root** (the folder that contains `flutter_app/` and `firebase/`).
+
 ## Prerequisites
 
 - Flutter SDK (stable), Chrome for web testing
@@ -11,10 +13,10 @@ Verified against the repository layout: configuration lives under `firebase/`; t
 ## 1. Install dependencies
 
 ```bash
-cd /Users/ward/workspace/ANS/flutter_app
+cd flutter_app
 flutter pub get
 
-cd /Users/ward/workspace/ANS/firebase/functions
+cd firebase/functions
 npm install
 npm run build
 ```
@@ -25,7 +27,7 @@ The template file `flutter_app/lib/firebase_options.dart` uses placeholder value
 
 ```bash
 dart pub global activate flutterfire_cli
-cd /Users/ward/workspace/ANS/flutter_app
+cd flutter_app
 dart pub global run flutterfire_cli:flutterfire configure --platforms=web
 ```
 
@@ -36,7 +38,7 @@ Link the Firebase project to `.firebaserc` (or align `ans-glossary-local` with y
 From the **`firebase/`** directory (where `firebase.json` lives):
 
 ```bash
-cd /Users/ward/workspace/ANS/firebase
+cd firebase
 firebase emulators:start
 ```
 
@@ -51,7 +53,7 @@ The HTTP function is available at:
 The Flutter app defaults to that URL via `GLOSSARY_URL` (see `glossary_repository.dart`). Override if your project ID or region differs:
 
 ```bash
-cd /Users/ward/workspace/ANS/flutter_app
+cd flutter_app
 flutter run -d chrome \
   --dart-define=GLOSSARY_URL=http://127.0.0.1:5001/ans-glossary-local/europe-west1/getGlossary
 ```
@@ -61,7 +63,7 @@ flutter run -d chrome \
 **Script (recommended):** with emulators running (or Firestore emulator only), in another terminal:
 
 ```bash
-cd /Users/ward/workspace/ANS/firebase/functions
+cd firebase/functions
 npm run seed:glossary
 ```
 
@@ -94,7 +96,7 @@ The admin UI lives at **`/admin`** (path URL strategy). Only users with a Firest
 4. **Run the app with emulators:**
 
 ```bash
-cd /Users/ward/workspace/ANS/flutter_app
+cd flutter_app
 flutter run -d chrome \
   --dart-define=USE_FIREBASE_EMULATOR=true \
   --dart-define=GLOSSARY_URL=http://127.0.0.1:5001/ans-glossary-local/europe-west1/getGlossary
@@ -107,16 +109,17 @@ Adjust `GLOSSARY_URL` if your Firebase project ID or region differs.
 ## 5. Build web + deploy
 
 ```bash
-cd /Users/ward/workspace/ANS/flutter_app
+cd flutter_app
 flutter build web --release
 
-cd /Users/ward/workspace/ANS/firebase
+cd firebase
 firebase deploy --only hosting,functions,firestore,storage
 ```
 
 Hosting serves `../flutter_app/build/web` per `firebase.json`. Set production glossary URL at build time:
 
 ```bash
+cd flutter_app
 flutter build web --release \
   --dart-define=GLOSSARY_URL=https://europe-west1-<YOUR_PROJECT_ID>.cloudfunctions.net/getGlossary
 ```

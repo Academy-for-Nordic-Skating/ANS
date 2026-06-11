@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -121,6 +122,20 @@ class _EntryEditorDialogState extends State<_EntryEditorDialog> {
       _saving = true;
     });
     try {
+      final authUser = FirebaseAuth.instance.currentUser;
+      if (authUser == null) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('You are not signed in. Open Admin and sign in again.'),
+            ),
+          );
+        }
+        return;
+      }
+      // Fresh token for Storage (mobile / PWA often hit storage/unauthorized with a stale JWT).
+      await authUser.getIdToken(true);
+
       final swedish = _swedishController.text.trim();
       final english = _englishController.text.trim();
       final sortOrder = _parseSortOrder();

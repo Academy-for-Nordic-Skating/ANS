@@ -26,6 +26,8 @@ class GlossaryRepository {
     final uri = Uri.parse(_baseUrl);
     final response = await _client.get(uri, headers: {
       'Accept': 'application/json',
+      'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache',
     });
     if (response.statusCode != 200) {
       throw GlossaryLoadException(

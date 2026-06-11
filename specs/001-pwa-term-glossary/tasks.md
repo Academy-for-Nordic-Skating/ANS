@@ -4,7 +4,7 @@ description: "Task list for 001-pwa-term-glossary (Flutter + Firebase)"
 
 # Tasks: PWA term glossary (Academy for Nordic Skating)
 
-**Input**: Design documents from `/Users/ward/workspace/ANS/specs/001-pwa-term-glossary/`  
+**Input**: Design documents from `specs/001-pwa-term-glossary/` (repository root)  
 **Prerequisites**: [plan.md](./plan.md), [spec.md](./spec.md), [research.md](./research.md), [data-model.md](./data-model.md), [contracts/](./contracts/), [quickstart.md](./quickstart.md)
 
 **Tests**: Not requested in the feature specification — no dedicated test tasks. Add widget/integration tests later if the team adopts TDD.
@@ -15,7 +15,7 @@ description: "Task list for 001-pwa-term-glossary (Flutter + Firebase)"
 
 - **[P]**: Can run in parallel (different files, no dependencies)
 - **[Story]**: User story label ([US1], [US2]) for story phases only
-- Paths are absolute under the repository root `/Users/ward/workspace/ANS/`
+- Paths are relative to the repository root (the directory containing `flutter_app/` and `firebase/`)
 
 ## Path Conventions (from plan.md)
 
@@ -28,9 +28,9 @@ description: "Task list for 001-pwa-term-glossary (Flutter + Firebase)"
 
 **Purpose**: Create Flutter app and Firebase project layout per [plan.md](./plan.md).
 
-- [x] T001 Create Flutter project `flutter_app` with org `se.academyfornordicskating` at `/Users/ward/workspace/ANS/flutter_app/` (`flutter create`)
-- [x] T002 [P] Create Firebase directory layout with `firebase/functions/package.json`, `firebase/functions/tsconfig.json` (TypeScript), and stub `firebase/functions/src/index.ts` at `/Users/ward/workspace/ANS/firebase/`
-- [x] T003 [P] Add `analysis_options.yaml` for the Flutter app at `/Users/ward/workspace/ANS/flutter_app/analysis_options.yaml` (lint rules aligned with Flutter lints)
+- [x] T001 Create Flutter project `flutter_app` with org `se.academyfornordicskating` at `flutter_app/` (`flutter create`)
+- [x] T002 [P] Create Firebase directory layout with `firebase/functions/package.json`, `firebase/functions/tsconfig.json` (TypeScript), and stub `firebase/functions/src/index.ts` at `firebase/`
+- [x] T003 [P] Add `analysis_options.yaml` for the Flutter app at `flutter_app/analysis_options.yaml` (lint rules aligned with Flutter lints)
 
 ---
 
@@ -40,14 +40,14 @@ description: "Task list for 001-pwa-term-glossary (Flutter + Firebase)"
 
 **⚠️ CRITICAL**: No user story work until this phase completes.
 
-- [x] T004 [P] Author read-only Firestore rules for `glossary_entries` collection in `/Users/ward/workspace/ANS/firebase/firestore.rules` (no client writes in v1)
-- [x] T005 [P] Author read-only Storage rules for glossary image paths in `/Users/ward/workspace/ANS/firebase/storage.rules` (public read for published assets only)
-- [x] T006 Implement `getGlossary` HTTP function (Firestore query + Storage URL resolution + JSON matching [contracts/glossary-api.openapi.yaml](./contracts/glossary-api.openapi.yaml)) in `/Users/ward/workspace/ANS/firebase/functions/src/index.ts`
-- [x] T007 Complete `/Users/ward/workspace/ANS/firebase/firebase.json` for Cloud Functions (2nd gen), Hosting site, Firestore/Storage emulator bindings, and CORS for the Flutter web origin
-- [x] T008 Add Flutter dependencies (`firebase_core`, `http`, and any `flutterfire` outputs) and generate `firebase_options.dart` via FlutterFire CLI in `/Users/ward/workspace/ANS/flutter_app/`
-- [x] T009 Add `GlossaryEntry` model (fields per [data-model.md](./data-model.md)) in `/Users/ward/workspace/ANS/flutter_app/lib/features/glossary/models/glossary_entry.dart`
-- [x] T010 Implement `GlossaryRepository` to `GET` glossary JSON from the Functions URL and map to `GlossaryEntry` in `/Users/ward/workspace/ANS/flutter_app/lib/features/glossary/glossary_repository.dart`
-- [x] T011 Initialize Firebase and register `MaterialApp` with home route to the glossary feature in `/Users/ward/workspace/ANS/flutter_app/lib/main.dart` and `/Users/ward/workspace/ANS/flutter_app/lib/app.dart`
+- [x] T004 [P] Author read-only Firestore rules for `glossary_entries` collection in `firebase/firestore.rules` (no client writes in v1)
+- [x] T005 [P] Author read-only Storage rules for glossary image paths in `firebase/storage.rules` (public read for published assets only)
+- [x] T006 Implement `getGlossary` HTTP function (Firestore query + Storage URL resolution + JSON matching [contracts/glossary-api.openapi.yaml](./contracts/glossary-api.openapi.yaml)) in `firebase/functions/src/index.ts`
+- [x] T007 Complete `firebase/firebase.json` for Cloud Functions (2nd gen), Hosting site, Firestore/Storage emulator bindings, and CORS for the Flutter web origin
+- [x] T008 Add Flutter dependencies (`firebase_core`, `http`, and any `flutterfire` outputs) and generate `firebase_options.dart` via FlutterFire CLI in `flutter_app/`
+- [x] T009 Add `GlossaryEntry` model (fields per [data-model.md](./data-model.md)) in `flutter_app/lib/features/glossary/models/glossary_entry.dart`
+- [x] T010 Implement `GlossaryRepository` to `GET` glossary JSON from the Functions URL and map to `GlossaryEntry` in `flutter_app/lib/features/glossary/glossary_repository.dart`
+- [x] T011 Initialize Firebase and register `MaterialApp` with home route to the glossary feature in `flutter_app/lib/main.dart` and `flutter_app/lib/app.dart`
 
 **Checkpoint**: Emulators can run; HTTP endpoint returns valid JSON; Flutter app starts without runtime errors.
 
@@ -61,9 +61,9 @@ description: "Task list for 001-pwa-term-glossary (Flutter + Firebase)"
 
 ### Implementation for User Story 1
 
-- [x] T012 [US1] Build `GlossaryEntryTile` showing Swedish, English, and `Image.network` with error/placeholder when `imageUrl` is null or load fails in `/Users/ward/workspace/ANS/flutter_app/lib/features/glossary/glossary_entry_tile.dart`
-- [x] T013 [US1] Build `GlossaryPage` with `ListView` (or `ListView.builder`), pull `GlossaryRepository` via provider pattern or simple constructor injection, and show loading / error / empty states per spec edge cases in `/Users/ward/workspace/ANS/flutter_app/lib/features/glossary/glossary_page.dart`
-- [x] T014 [US1] Ensure long Swedish/English text does not hide meaning (wrapping/scroll within the tile) in `/Users/ward/workspace/ANS/flutter_app/lib/features/glossary/glossary_entry_tile.dart`
+- [x] T012 [US1] Build `GlossaryEntryTile` showing Swedish, English, and `Image.network` with error/placeholder when `imageUrl` is null or load fails in `flutter_app/lib/features/glossary/glossary_entry_tile.dart`
+- [x] T013 [US1] Build `GlossaryPage` with `ListView` (or `ListView.builder`), pull `GlossaryRepository` via provider pattern or simple constructor injection, and show loading / error / empty states per spec edge cases in `flutter_app/lib/features/glossary/glossary_page.dart`
+- [x] T014 [US1] Ensure long Swedish/English text does not hide meaning (wrapping/scroll within the tile) in `flutter_app/lib/features/glossary/glossary_entry_tile.dart`
 
 **Checkpoint**: User Story 1 acceptance scenarios from `spec.md` are demonstrable on web without copy feature.
 
@@ -77,8 +77,8 @@ description: "Task list for 001-pwa-term-glossary (Flutter + Firebase)"
 
 ### Implementation for User Story 2
 
-- [x] T015 [US2] Add explicit copy affordance (e.g. icon button) calling `Clipboard.setData` with `swedish` only in `/Users/ward/workspace/ANS/flutter_app/lib/features/glossary/glossary_entry_tile.dart`
-- [x] T016 [US2] On clipboard failure (e.g. web permission), show a short inline or snackbar message with fallback hint per spec in `/Users/ward/workspace/ANS/flutter_app/lib/features/glossary/glossary_page.dart` or `/Users/ward/workspace/ANS/flutter_app/lib/features/glossary/glossary_entry_tile.dart`
+- [x] T015 [US2] Add explicit copy affordance (e.g. icon button) calling `Clipboard.setData` with `swedish` only in `flutter_app/lib/features/glossary/glossary_entry_tile.dart`
+- [x] T016 [US2] On clipboard failure (e.g. web permission), show a short inline or snackbar message with fallback hint per spec in `flutter_app/lib/features/glossary/glossary_page.dart` or `flutter_app/lib/features/glossary/glossary_entry_tile.dart`
 
 **Checkpoint**: Copy acceptance scenarios from `spec.md` pass on target browsers.
 
@@ -88,9 +88,9 @@ description: "Task list for 001-pwa-term-glossary (Flutter + Firebase)"
 
 **Purpose**: PWA install metadata, Hosting alignment, quickstart validation.
 
-- [x] T017 [P] Tune PWA metadata (name, theme color, icons) under `/Users/ward/workspace/ANS/flutter_app/web/` including `manifest.json` and favicon references
-- [x] T018 [P] Align Hosting `public` directory with `flutter build web` output path and any SPA rewrites in `/Users/ward/workspace/ANS/firebase/firebase.json`
-- [x] T019 Execute and verify steps in `/Users/ward/workspace/ANS/specs/001-pwa-term-glossary/quickstart.md` (emulators, build, deploy dry-run); fix any doc/code gaps found
+- [x] T017 [P] Tune PWA metadata (name, theme color, icons) under `flutter_app/web/` including `manifest.json` and favicon references
+- [x] T018 [P] Align Hosting `public` directory with `flutter build web` output path and any SPA rewrites in `firebase/firebase.json`
+- [x] T019 Execute and verify steps in `specs/001-pwa-term-glossary/quickstart.md` (emulators, build, deploy dry-run); fix any doc/code gaps found
 
 ---
 
@@ -127,15 +127,15 @@ description: "Task list for 001-pwa-term-glossary (Flutter + Firebase)"
 ## Parallel example: Phase 2 rules
 
 ```text
-T004 — Firestore rules in /Users/ward/workspace/ANS/firebase/firestore.rules
-T005 — Storage rules in /Users/ward/workspace/ANS/firebase/storage.rules
+T004 — Firestore rules in firebase/firestore.rules
+T005 — Storage rules in firebase/storage.rules
 ```
 
 ## Parallel example: Phase 5
 
 ```text
-T017 — PWA assets in /Users/ward/workspace/ANS/flutter_app/web/
-T018 — Hosting config in /Users/ward/workspace/ANS/firebase/firebase.json
+T017 — PWA assets in flutter_app/web/
+T018 — Hosting config in firebase/firebase.json
 ```
 
 ---

@@ -34,6 +34,10 @@ class GlossaryAdminPage extends StatelessWidget {
       return;
     }
     try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await user.getIdToken(true);
+      }
       final path = data['imageStoragePath'] as String?;
       if (path != null && path.isNotEmpty) {
         try {
