@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../ans_colors.dart';
 import 'glossary_entry_tile.dart';
 import 'glossary_repository.dart'
     show GlossaryLoadException, GlossaryRepository;
@@ -48,6 +49,8 @@ class _GlossaryPageState extends State<GlossaryPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.transparent,
+        foregroundColor: AnsColors.navy,
+        iconTheme: const IconThemeData(color: AnsColors.navy),
         toolbarHeight: 72,
         title: SizedBox(
           height: 56,

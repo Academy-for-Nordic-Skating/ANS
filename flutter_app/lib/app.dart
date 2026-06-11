@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
+import 'ans_colors.dart';
 import 'features/admin/admin_shell.dart';
 import 'features/glossary/glossary_page.dart';
 import 'features/glossary/glossary_repository.dart';
@@ -25,7 +26,11 @@ class AnsApp extends StatelessWidget {
     return MaterialApp(
       title: 'Academy for Nordic Skating',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
+        colorScheme: const ColorScheme.light(
+          primary: AnsColors.teal,
+          onPrimary: Colors.white,
+          onSurface: AnsColors.navy,
+        ),
         scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
       ),

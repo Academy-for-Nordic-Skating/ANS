@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart' show WebHtmlElementStrategy;
 import 'package:flutter/services.dart';
 
+import '../../ans_colors.dart';
 import 'models/glossary_entry.dart';
 
 class GlossaryEntryTile extends StatefulWidget {
@@ -58,26 +58,14 @@ class _GlossaryEntryTileState extends State<GlossaryEntryTile> {
     final theme = Theme.of(context);
     final entry = widget.entry;
 
-    final surface = theme.colorScheme.surface;
-    final cardColor = _hasImage
-        ? Color.alphaBlend(
-            theme.colorScheme.onSurface.withValues(alpha: 0.085),
-            surface,
-          )
-        : surface;
-
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      color: cardColor,
+      color: AnsColors.rowBackground,
       surfaceTintColor: Colors.transparent,
-      elevation: _hasImage ? 0 : 1,
+      elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: const BorderRadius.all(Radius.circular(12)),
-        side: _hasImage
-            ? BorderSide(
-                color: theme.colorScheme.outline.withValues(alpha: 0.35),
-              )
-            : BorderSide.none,
+        side: BorderSide.none,
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -89,11 +77,20 @@ class _GlossaryEntryTileState extends State<GlossaryEntryTile> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 4, left: 4),
+                  child: IconButton(
+                    tooltip: 'Copy Swedish term',
+                    icon: const Icon(Icons.copy, color: AnsColors.navy),
+                    onPressed: () => _copySwedish(context),
+                    visualDensity: VisualDensity.compact,
+                  ),
+                ),
                 Expanded(
                   child: InkWell(
                     onTap: _hasImage ? _toggleExpanded : null,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 12, 8, 12),
+                      padding: const EdgeInsets.fromLTRB(0, 12, 12, 12),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -101,6 +98,7 @@ class _GlossaryEntryTileState extends State<GlossaryEntryTile> {
                             child: Text(
                               entry.swedish,
                               style: theme.textTheme.titleLarge?.copyWith(
+                                color: AnsColors.navy,
                                 fontWeight: FontWeight.w600,
                                 fontSize: (theme.textTheme.titleLarge?.fontSize ??
                                         22) -
@@ -113,7 +111,8 @@ class _GlossaryEntryTileState extends State<GlossaryEntryTile> {
                             child: Text(
                               entry.english,
                               style: theme.textTheme.titleMedium?.copyWith(
-                                color: theme.colorScheme.primary,
+                                color: AnsColors.teal,
+                                fontWeight: FontWeight.w400,
                                 fontSize:
                                     (theme.textTheme.titleMedium?.fontSize ??
                                             16) +
@@ -121,18 +120,21 @@ class _GlossaryEntryTileState extends State<GlossaryEntryTile> {
                               ),
                             ),
                           ),
+                          if (_hasImage) ...[
+                            const SizedBox(width: 4),
+                            AnimatedRotation(
+                              turns: _expanded ? 0.5 : 0,
+                              duration: const Duration(milliseconds: 220),
+                              curve: Curves.easeInOut,
+                              child: const Icon(
+                                Icons.keyboard_arrow_down,
+                                color: AnsColors.teal,
+                              ),
+                            ),
+                          ],
                         ],
                       ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 4, right: 4),
-                  child: IconButton(
-                    tooltip: 'Copy Swedish term',
-                    icon: const Icon(Icons.copy),
-                    onPressed: () => _copySwedish(context),
-                    visualDensity: VisualDensity.compact,
                   ),
                 ),
               ],

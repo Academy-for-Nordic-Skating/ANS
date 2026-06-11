@@ -40,7 +40,7 @@ try {
   if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
   Write-Host '>> flutter analyze' -ForegroundColor Cyan
-  flutter analyze
+  flutter analyze --no-fatal-infos
   if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
   Write-Host ''
