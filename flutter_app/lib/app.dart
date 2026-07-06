@@ -3,14 +3,19 @@ import 'package:flutter/material.dart';
 
 import 'ans_colors.dart';
 import 'features/admin/admin_shell.dart';
-import 'features/glossary/glossary_page.dart';
 import 'features/glossary/glossary_repository.dart';
+import 'features/shell/app_section.dart';
+import 'features/shell/main_shell.dart';
 
 String _initialRoute() {
   if (kIsWeb) {
     final path = Uri.base.path;
     if (path.startsWith('/admin')) {
       return '/admin';
+    }
+    final section = appSectionFromPath(path);
+    if (section != null) {
+      return section.route;
     }
   }
   return '/';
@@ -36,11 +41,20 @@ class AnsApp extends StatelessWidget {
       ),
       initialRoute: _initialRoute(),
       routes: {
-        '/': (context) => GlossaryPage(
+        '/': (context) => MainShell(
+              section: AppSection.glossary,
               repository: repository,
-              onAdminPressed: () {
-                Navigator.of(context).pushNamed('/admin');
-              },
+              onAdminPressed: () => Navigator.of(context).pushNamed('/admin'),
+            ),
+        '/glossary': (context) => MainShell(
+              section: AppSection.glossary,
+              repository: repository,
+              onAdminPressed: () => Navigator.of(context).pushNamed('/admin'),
+            ),
+        '/lead-skater-signs': (context) => MainShell(
+              section: AppSection.leadSkaterSigns,
+              repository: repository,
+              onAdminPressed: () => Navigator.of(context).pushNamed('/admin'),
             ),
         '/admin': (context) => const AdminShell(),
       },
