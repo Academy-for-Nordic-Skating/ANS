@@ -35,11 +35,26 @@ class _MainShellState extends State<MainShell> {
     Navigator.pushReplacementNamed(context, section.route);
   }
 
+  IconData _drawerLeadingIcon(AppSection section) {
+    switch (section) {
+      case AppSection.glossary:
+        return Icons.menu_book_outlined;
+      case AppSection.leadSkaterSigns:
+        return Icons.ads_click_outlined;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    // Release web builds tree-shake Material Icons; keep drawer glyphs referenced.
+    return Stack(
+      children: [
+        const Offstage(
+          child: Icon(Icons.ads_click_outlined),
+        ),
+        Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.transparent,
         foregroundColor: AnsColors.navy,
@@ -61,56 +76,76 @@ class _MainShellState extends State<MainShell> {
               icon: const Icon(Icons.refresh),
             ),
         ],
-      ),
-      drawer: Drawer(
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
-                child: Text(
-                  'Academy for Nordic Skating',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: AnsColors.navy,
-                        fontWeight: FontWeight.w600,
-                      ),
-                ),
-              ),
-              const Divider(height: 1),
-              for (final section in AppSection.values)
-                ListTile(
-                  leading: Icon(
-                    section.drawerIcon,
-                    color: widget.section == section
-                        ? AnsColors.teal
-                        : AnsColors.navy,
-                  ),
-                  title: Text(
-                    section.drawerLabel,
-                    style: TextStyle(
-                      color: widget.section == section
-                          ? AnsColors.teal
-                          : AnsColors.navy,
-                      fontWeight: widget.section == section
-                          ? FontWeight.w600
-                          : FontWeight.w400,
+          ),
+          drawer: Drawer(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            child: SafeArea(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Material(
+                    color: Colors.white,
+                    elevation: 4,
+                    borderRadius: BorderRadius.circular(12),
+                    clipBehavior: Clip.antiAlias,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                          child: Text(
+                            'Academy for Nordic Skating',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  color: AnsColors.navy,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                        ),
+                        const Divider(height: 1),
+                        for (final section in AppSection.values)
+                          ListTile(
+                            leading: Icon(
+                              _drawerLeadingIcon(section),
+                              color: widget.section == section
+                                  ? AnsColors.teal
+                                  : AnsColors.navy,
+                            ),
+                            title: Text(
+                              section.drawerLabel,
+                              style: TextStyle(
+                                color: widget.section == section
+                                    ? AnsColors.teal
+                                    : AnsColors.navy,
+                                fontWeight: widget.section == section
+                                    ? FontWeight.w600
+                                    : FontWeight.w400,
+                              ),
+                            ),
+                            selected: widget.section == section,
+                            onTap: () => _navigateTo(section),
+                          ),
+                      ],
                     ),
                   ),
-                  selected: widget.section == section,
-                  onTap: () => _navigateTo(section),
                 ),
-            ],
+              ),
+            ),
           ),
+          body: switch (widget.section) {
+            AppSection.glossary => GlossaryPage(
+                key: _glossaryKey,
+                repository: widget.repository,
+              ),
+            AppSection.leadSkaterSigns => const LeadSkaterSignsPage(),
+          },
         ),
-      ),
-      body: switch (widget.section) {
-        AppSection.glossary => GlossaryPage(
-            key: _glossaryKey,
-            repository: widget.repository,
-          ),
-        AppSection.leadSkaterSigns => const LeadSkaterSignsPage(),
-      },
+      ],
     );
   }
 }

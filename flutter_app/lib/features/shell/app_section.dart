@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 /// Primary public sections reachable from the navigation drawer.
 enum AppSection {
   glossary,
@@ -25,14 +23,6 @@ extension AppSectionRoute on AppSection {
     }
   }
 
-  IconData get drawerIcon {
-    switch (this) {
-      case AppSection.glossary:
-        return Icons.menu_book_outlined;
-      case AppSection.leadSkaterSigns:
-        return Icons.ads_click_outlined;
-    }
-  }
 }
 
 AppSection? appSectionFromPath(String path) {
