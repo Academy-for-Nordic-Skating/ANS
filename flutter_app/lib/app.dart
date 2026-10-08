@@ -51,6 +51,11 @@ class AnsApp extends StatelessWidget {
               repository: repository,
               onAdminPressed: () => Navigator.of(context).pushNamed('/admin'),
             ),
+        '/tour-report-template': (context) => MainShell(
+              section: AppSection.tourReportTemplate,
+              repository: repository,
+              onAdminPressed: () => Navigator.of(context).pushNamed('/admin'),
+            ),
         '/lead-skater-signs': (context) => MainShell(
               section: AppSection.leadSkaterSigns,
               repository: repository,

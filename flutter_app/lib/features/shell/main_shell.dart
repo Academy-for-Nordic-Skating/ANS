@@ -4,6 +4,7 @@ import '../../ans_colors.dart';
 import '../glossary/glossary_page.dart';
 import '../glossary/glossary_repository.dart';
 import '../lead_skater_signs/lead_skater_signs_page.dart';
+import '../tour_report_template/tour_report_template_page.dart';
 import 'ans_logo_title.dart';
 import 'app_section.dart';
 
@@ -39,6 +40,8 @@ class _MainShellState extends State<MainShell> {
     switch (section) {
       case AppSection.glossary:
         return Icons.menu_book_outlined;
+      case AppSection.tourReportTemplate:
+        return Icons.description_outlined;
       case AppSection.leadSkaterSigns:
         return Icons.ads_click_outlined;
     }
@@ -50,7 +53,12 @@ class _MainShellState extends State<MainShell> {
     return Stack(
       children: [
         const Offstage(
-          child: Icon(Icons.ads_click_outlined),
+          child: Row(
+            children: [
+              Icon(Icons.ads_click_outlined),
+              Icon(Icons.description_outlined),
+            ],
+          ),
         ),
         Scaffold(
           backgroundColor: Colors.white,
@@ -142,6 +150,7 @@ class _MainShellState extends State<MainShell> {
                 key: _glossaryKey,
                 repository: widget.repository,
               ),
+            AppSection.tourReportTemplate => const TourReportTemplatePage(),
             AppSection.leadSkaterSigns => const LeadSkaterSignsPage(),
           },
         ),
