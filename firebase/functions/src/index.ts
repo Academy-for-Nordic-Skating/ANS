@@ -73,11 +73,16 @@ export const getGlossary = onRequest(
 
         // Public download URL (storage.rules allow read for glossary/**). Avoids
         // getSignedUrl IAM failures that left imageUrl null and broke the client UI.
+        // Append &v=<updatedAt> so browsers/PWAs fetch a new image after CMS replaces
+        // a file at the same Storage path (same path alone is cached forever otherwise).
         let imageUrl: string | null = null;
         const path = d.imageStoragePath?.trim();
         if (path) {
           const enc = encodeURIComponent(path);
-          imageUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${enc}?alt=media`;
+          const version = d.updatedAt ? d.updatedAt.toMillis() : 0;
+          imageUrl =
+            `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${enc}` +
+            `?alt=media&v=${version}`;
         }
 
         entries.push({
